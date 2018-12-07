@@ -11,7 +11,8 @@ export default class DataTable extends React.Component {
     state = {
         originalData: this.props.data,
         filteredData: [],
-        searchQuery: ""
+        searchQuery: "",
+        activeActionMenu: ""
     };
 
     componentDidMount() {}
@@ -37,8 +38,12 @@ export default class DataTable extends React.Component {
         this.setState({filteredData});
     };
 
+    handleRowActionMenu = activeActionMenu => {
+        this.setState({activeActionMenu});
+    };
+
     render() {
-        const {searchQuery, filteredData} = this.state;
+        const {searchQuery, filteredData, activeActionMenu} = this.state;
         const {title, header, data} = this.props;
 
         const activeData = searchQuery ? filteredData : data;
@@ -66,6 +71,42 @@ export default class DataTable extends React.Component {
                                     {Object.values(datum).map((value, i) => (
                                         <Cell key={i}>{value}</Cell>
                                     ))}
+                                    <Cell>
+                                        <div
+                                            className={`dropdown ${
+                                                activeActionMenu == datum.ID ? "is-active" : ""
+                                            }`}>
+                                            <div className="dropdown-trigger">
+                                                <button
+                                                    onBlur={this.handleRowActionMenu}
+                                                    onClick={() =>
+                                                        this.handleRowActionMenu(datum.ID)
+                                                    }
+                                                    style={{width: 32, height: 32}}
+                                                    className="button is-rounded is-paddingless"
+                                                    aria-haspopup="true"
+                                                    aria-controls={datum.ID}>
+                                                    <span className="icon is-small">
+                                                        <i className="fas fa-ellipsis-v" />
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div
+                                                className="dropdown-menu"
+                                                id={datum.ID}
+                                                role="menu">
+                                                <div className="dropdown-content">
+                                                    <a className="dropdown-item has-text-primary is-white">
+                                                        EDIT
+                                                    </a>
+                                                    <hr className="dropdown-divider" />
+                                                    <a className="dropdown-item has-text-danger is-white">
+                                                        DELETE
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Cell>
                                 </Row>
                             );
                         })}
