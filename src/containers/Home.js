@@ -64,7 +64,7 @@ export default class Home extends React.Component {
     render() {
         const {data, header} = this.state;
         return (
-            <div class="section">
+            <div className="section">
                 <div className="container">
                     <DataTable title="Lorem Ipsum" header={header} data={data} />
                 </div>

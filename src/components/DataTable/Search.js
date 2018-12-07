@@ -1,9 +1,18 @@
 import React from "react";
 
-export default function Search() {
-    return (
-        <div className="control is-loading">
-            <input class="input is-rounded" type="text" placeholder="Rounded input" />
-        </div>
-    );
+export default class Search extends React.Component {
+    render() {
+        const {onChange, value} = this.props;
+        return (
+            <div className="control is-loading">
+                <input
+                    onChange={event => onChange(event.target.value)}
+                    className="input is-rounded"
+                    type="text"
+                    placeholder="Search"
+                    value={value}
+                />
+            </div>
+        );
+    }
 }

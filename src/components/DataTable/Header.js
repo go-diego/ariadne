@@ -4,12 +4,12 @@ import Filter from "./Filter";
 
 export default class Header extends React.Component {
     render() {
-        const {title} = this.props;
+        const {title, query, onSearchChange} = this.props;
         return (
             <div>
                 <h1 className="title">{title}</h1>
                 <div style={{display: "flex", justifyContent: "space-between"}}>
-                    <Search />
+                    <Search onChange={onSearchChange} value={query} />
                     <Filter />
                 </div>
             </div>
