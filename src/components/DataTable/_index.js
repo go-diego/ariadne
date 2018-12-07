@@ -25,18 +25,14 @@ export default class DataTable extends React.Component {
             return {...o};
         });
 
-        /**
-         * TODO:
-         * Room for improvement. Fields through which to search should be dynamic
-         */
-        const filteredData = originalData.filter(
-            datum =>
-                datum.Name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                datum.Description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                datum.Date.includes(searchQuery) ||
-                datum.Amount.toString().includes(searchQuery) ||
-                datum.ID.toLowerCase().includes(searchQuery.toLowerCase())
-        );
+        const filteredData = originalData.filter(datum => {
+            return Object.keys(datum).some(key =>
+                datum[key]
+                    .toString()
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+            );
+        });
         this.setState({filteredData});
     };
 
