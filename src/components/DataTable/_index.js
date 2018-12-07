@@ -9,13 +9,15 @@ import CellHeading from "./CellHeading";
 
 export default class DataTable extends React.Component {
     state = {
-        originalData: this.props.data,
+        originalData: this.props.data.map(datum => {
+            datum.isSelected = false;
+            return datum;
+        }),
         filteredData: [],
         searchQuery: "",
-        activeActionMenu: ""
+        activeActionMenu: "",
+        multiSelected: false
     };
-
-    componentDidMount() {}
 
     handleSearch = searchQuery => {
         this.setState({searchQuery});
@@ -42,19 +44,58 @@ export default class DataTable extends React.Component {
         this.setState({activeActionMenu});
     };
 
-    render() {
-        const {searchQuery, filteredData, activeActionMenu} = this.state;
-        const {title, header, data} = this.props;
+    handleCheck = (check, event) => {
+        const originalData = this.state.originalData.map(o => {
+            return {...o};
+        });
+        let multiSelected = false;
 
-        const activeData = searchQuery ? filteredData : data;
+        if (check === "MASTER") {
+            originalData.forEach(datum => {
+                datum.isSelected = event.target.checked;
+            });
+        } else {
+            originalData.forEach(datum => {
+                if (datum.ID === check) {
+                    datum.isSelected = event.target.checked;
+                }
+            });
+        }
+
+        if (originalData.filter(datum => datum.isSelected).length > 1) {
+            multiSelected = true;
+        }
+
+        this.setState({originalData, multiSelected});
+    };
+
+    render() {
+        const {
+            searchQuery,
+            filteredData,
+            activeActionMenu,
+            originalData,
+            multiSelected
+        } = this.state;
+        const {title, header} = this.props;
+
+        const activeData = searchQuery ? filteredData : originalData;
         return (
             <div>
-                <Header query={searchQuery} onSearchChange={this.handleSearch} title={title} />
+                <Header
+                    multiSelected={multiSelected}
+                    query={searchQuery}
+                    onSearchChange={this.handleSearch}
+                    title={title}
+                />
                 <Table>
                     <Head>
                         <Row>
                             <CellHeading>
-                                <input type="checkbox" />
+                                <input
+                                    onChange={event => this.handleCheck("MASTER", event)}
+                                    type="checkbox"
+                                />
                             </CellHeading>
                             {header.map((cell, i) => (
                                 <CellHeading key={i}>{cell.label}</CellHeading>
@@ -66,7 +107,11 @@ export default class DataTable extends React.Component {
                             return (
                                 <Row key={datum.ID}>
                                     <Cell>
-                                        <input type="checkbox" />
+                                        <input
+                                            checked={datum.isSelected}
+                                            onChange={event => this.handleCheck(datum.ID, event)}
+                                            type="checkbox"
+                                        />
                                     </Cell>
                                     {Object.values(datum).map((value, i) => (
                                         <Cell key={i}>{value}</Cell>
