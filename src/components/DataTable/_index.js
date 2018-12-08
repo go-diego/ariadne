@@ -36,6 +36,14 @@ export default class DataTable extends React.Component {
         this.setState({filteredData});
     };
 
+    handleSort = (prop, type) => () => {
+        console.log("PROP", prop);
+        console.log("TYPe", type);
+        // originalData.sort((a,b) => {
+
+        // })
+    };
+
     handleRowActionMenu = activeActionMenu => {
         this.setState({activeActionMenu});
     };
@@ -87,14 +95,36 @@ export default class DataTable extends React.Component {
                 <Table>
                     <Head>
                         <Row>
-                            <CellHeading>
-                                <input
-                                    onChange={event => this.handleCheck("MASTER", event)}
-                                    type="checkbox"
-                                />
+                            <CellHeading noGrow>
+                                <span
+                                    style={{
+                                        display: "inline-flex",
+                                        justifyContent: "center",
+                                        textAlign: "center",
+                                        alignItems: "center",
+                                        height: "2.25em"
+                                    }}>
+                                    <input
+                                        onChange={event => this.handleCheck("MASTER", event)}
+                                        type="checkbox"
+                                    />
+                                </span>
                             </CellHeading>
                             {header.map((cell, i) => (
-                                <CellHeading key={i}>{cell.label}</CellHeading>
+                                <CellHeading key={i}>
+                                    {(cell.noSort && (
+                                        <span
+                                            style={{
+                                                display: "inline-flex",
+                                                justifyContent: "center",
+                                                textAlign: "center",
+                                                alignItems: "center",
+                                                height: "2.25em"
+                                            }}>
+                                            {cell.label}
+                                        </span>
+                                    )) || <a className="button is-text">{cell.label}</a>}
+                                </CellHeading>
                             ))}
                         </Row>
                     </Head>

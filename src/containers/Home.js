@@ -36,27 +36,27 @@ export default class Home extends React.Component {
         header: [
             {
                 label: "ID",
-                sortFn: () => {}
+                noSort: true
             },
             {
                 label: "Name",
-                sortFn: () => {}
+                type: "string"
             },
             {
                 label: "Description",
-                sortFn: () => {}
+                noSort: true
             },
             {
                 label: "Date",
-                sortFn: () => {}
+                type: "date"
             },
             {
                 label: "Amount",
-                sortFn: () => {}
+                type: "number"
             },
             {
                 label: "Action",
-                sortFn: () => {}
+                noSort: true
             }
         ]
     };
