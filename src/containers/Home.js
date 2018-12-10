@@ -48,7 +48,8 @@ export default class Home extends React.Component {
             },
             {
                 label: "Description",
-                noSort: true
+                noSort: true,
+                isEditable: true
             },
             {
                 label: "Date",
