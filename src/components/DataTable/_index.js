@@ -173,7 +173,7 @@ export default class DataTable extends React.Component {
 
         const EditModeRowActions = rowId => {
             return (
-                <div className="buttons are-small" style={{display: "flex"}}>
+                <div className="buttons are-small is-flex">
                     <a
                         onClick={this.handleSaveEdit}
                         className="button is-primary is-rounded is-small">
@@ -201,36 +201,18 @@ export default class DataTable extends React.Component {
                 <Table>
                     <Head>
                         <Row>
-                            <CellHeading noGrow>
-                                <span
-                                    style={{
-                                        display: "inline-flex",
-                                        justifyContent: "center",
-                                        textAlign: "center",
-                                        alignItems: "center",
-                                        height: "2.25em"
-                                    }}>
-                                    <input
-                                        disabled={rowInEditMode !== "" ? true : null}
-                                        onChange={event => this.handleCheck("MASTER", event)}
-                                        type="checkbox"
-                                    />
-                                </span>
+                            <CellHeading>
+                                <input
+                                    disabled={rowInEditMode !== "" ? true : null}
+                                    onChange={event => this.handleCheck("MASTER", event)}
+                                    type="checkbox"
+                                />
                             </CellHeading>
                             {header.map((cell, i) => (
                                 <CellHeading key={i}>
-                                    {(cell.noSort && (
-                                        <span
-                                            style={{
-                                                display: "inline-flex",
-                                                justifyContent: "center",
-                                                textAlign: "center",
-                                                alignItems: "center",
-                                                height: "2.25em"
-                                            }}>
-                                            {cell.label}
-                                        </span>
-                                    )) || <a className="button is-text">{cell.label}</a>}
+                                    {(cell.noSort && <span>{cell.label}</span>) || (
+                                        <a className="button is-text">{cell.label}</a>
+                                    )}
                                 </CellHeading>
                             ))}
                         </Row>

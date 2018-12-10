@@ -15,7 +15,7 @@ export default class Header extends React.Component {
         return (
             <div>
                 <h1 className="title">{title}</h1>
-                <div style={{display: "flex", justifyContent: "space-between", padding: "16px 0"}}>
+                <div className="is-flex justify-content-between padding-y">
                     <Search onChange={onSearchChange} value={query} />
                     <Filter onFilterSelect={onFilterSelect} options={filterOptions} />
                 </div>
