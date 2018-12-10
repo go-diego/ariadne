@@ -10,7 +10,7 @@ import CellHeading from "./CellHeading";
 export default class DataTable extends React.Component {
     state = {
         originalData: this.props.data.map(datum => {
-            datum.isSelected = false;
+            datum._isSelected = false;
             return datum;
         }),
         filteredData: [],
@@ -129,58 +129,67 @@ export default class DataTable extends React.Component {
                         </Row>
                     </Head>
                     <Body>
-                        {activeData.map(datum => {
-                            return (
-                                <Row key={datum.ID}>
-                                    <Cell>
-                                        <input
-                                            checked={datum.isSelected}
-                                            onChange={event => this.handleCheck(datum.ID, event)}
-                                            type="checkbox"
-                                        />
-                                    </Cell>
-                                    {Object.values(datum).map((value, i) => (
-                                        <Cell key={i}>{value}</Cell>
-                                    ))}
-                                    <Cell>
-                                        <div
-                                            className={`dropdown ${
-                                                activeActionMenu == datum.ID ? "is-active" : ""
-                                            }`}>
-                                            <div className="dropdown-trigger">
-                                                <button
-                                                    onBlur={this.handleRowActionMenu}
-                                                    onClick={() =>
-                                                        this.handleRowActionMenu(datum.ID)
-                                                    }
-                                                    style={{width: 32, height: 32}}
-                                                    className="button is-rounded is-paddingless"
-                                                    aria-haspopup="true"
-                                                    aria-controls={datum.ID}>
-                                                    <span className="icon is-small">
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </span>
-                                                </button>
-                                            </div>
+                        {(activeData.length > 0 &&
+                            activeData.map(datum => {
+                                return (
+                                    <Row key={datum.ID}>
+                                        <Cell>
+                                            <input
+                                                checked={datum.isSelected}
+                                                onChange={event =>
+                                                    this.handleCheck(datum.ID, event)
+                                                }
+                                                type="checkbox"
+                                            />
+                                        </Cell>
+                                        {Object.keys(datum)
+                                            .filter(value => value !== "_isSelected")
+                                            .map((key, i) => (
+                                                <Cell key={i}>{datum[key]}</Cell>
+                                            ))}
+                                        <Cell>
                                             <div
-                                                className="dropdown-menu"
-                                                id={datum.ID}
-                                                role="menu">
-                                                <div className="dropdown-content">
-                                                    <a className="dropdown-item has-text-primary is-white">
-                                                        EDIT
-                                                    </a>
-                                                    <hr className="dropdown-divider" />
-                                                    <a className="dropdown-item has-text-danger is-white">
-                                                        DELETE
-                                                    </a>
+                                                className={`dropdown ${
+                                                    activeActionMenu == datum.ID ? "is-active" : ""
+                                                }`}>
+                                                <div className="dropdown-trigger">
+                                                    <button
+                                                        onBlur={this.handleRowActionMenu}
+                                                        onClick={() =>
+                                                            this.handleRowActionMenu(datum.ID)
+                                                        }
+                                                        style={{width: 32, height: 32}}
+                                                        className="button is-rounded is-paddingless"
+                                                        aria-haspopup="true"
+                                                        aria-controls={datum.ID}>
+                                                        <span className="icon is-small">
+                                                            <i className="fas fa-ellipsis-v" />
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                                <div
+                                                    className="dropdown-menu"
+                                                    id={datum.ID}
+                                                    role="menu">
+                                                    <div className="dropdown-content">
+                                                        <a className="dropdown-item has-text-primary is-white">
+                                                            EDIT
+                                                        </a>
+                                                        <hr className="dropdown-divider" />
+                                                        <a className="dropdown-item has-text-danger is-white">
+                                                            DELETE
+                                                        </a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </Cell>
-                                </Row>
-                            );
-                        })}
+                                        </Cell>
+                                    </Row>
+                                );
+                            })) || (
+                            <Row>
+                                <Cell colSpan={header.length + 1}>No Records found</Cell>
+                            </Row>
+                        )}
                     </Body>
                 </Table>
             </div>
