@@ -33,7 +33,7 @@ export default class Home extends React.Component {
                 ID: "74749D4F-A43F-34E8-A687-D54924B17251",
                 Name: "Cameron Thompson",
                 Description: "dolor. Fusce mi lorem, vehicula et, rutrum eu,",
-                Date: "2019-12-15T06:56:15-07:00",
+                Date: "2018-12-15T06:56:15-07:00",
                 Amount: 807.6
             }
         ],

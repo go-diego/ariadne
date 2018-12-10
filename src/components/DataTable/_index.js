@@ -64,28 +64,39 @@ export default class DataTable extends React.Component {
     };
 
     handleCheck = (check, event) => {
+        const {searchQuery, isFiltered} = this.state;
         const originalData = this.state.originalData.map(o => {
             return {...o};
         });
+        const filteredData = this.state.filteredData.map(o => {
+            return {...o};
+        });
+        const activeData = searchQuery || isFiltered ? filteredData : originalData;
+
         let multiSelected = false;
 
         if (check === "MASTER") {
-            originalData.forEach(datum => {
-                datum.isSelected = event.target.checked;
+            activeData.forEach(datum => {
+                datum._isSelected = event.target.checked;
             });
         } else {
-            originalData.forEach(datum => {
+            activeData.forEach(datum => {
                 if (datum.ID === check) {
-                    datum.isSelected = event.target.checked;
+                    datum._isSelected = event.target.checked;
                 }
             });
         }
 
-        if (originalData.filter(datum => datum.isSelected).length > 1) {
+        if (activeData.filter(datum => datum._isSelected).length > 1) {
             multiSelected = true;
         }
 
-        this.setState({originalData, multiSelected});
+        this.setState({multiSelected});
+        if (searchQuery || isFiltered) {
+            this.setState({filteredData: activeData});
+        } else {
+            this.setState({originalData: activeData});
+        }
     };
 
     render() {
@@ -153,7 +164,7 @@ export default class DataTable extends React.Component {
                                     <Row key={datum.ID}>
                                         <Cell>
                                             <input
-                                                checked={datum.isSelected}
+                                                checked={datum._isSelected}
                                                 onChange={event =>
                                                     this.handleCheck(datum.ID, event)
                                                 }
