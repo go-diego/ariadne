@@ -1,0 +1,99 @@
+{
+    "Name": "Diego Bernal",
+    "Age": "27",
+    "Location": "Coachella Valley, California",
+    "Languages": [
+        {
+            "language": "English",
+            "level": "5 -- Native or bilingual proficiency"
+        },
+        {
+            "language": "English",
+            "level": "5 -- Native or bilingual proficiency"
+        },
+        {
+            "language": "French",
+            "level": "2 -- Limited working proficiency"
+        }
+    ],
+    "Education": [
+        {
+            "Campus": "CSU San Bernardino",
+            "DegreeType": "B.S",
+            "Degree": "Computer Engineering",
+            "StartDate": "Sept 2009",
+            "EndDate": "Jun 2014"
+        },
+        {
+            "Campus": "CSU San Bernardino",
+            "DegreeType": "Minor",
+            "Degree": "Applied Physics",
+            "StartDate": "Sept 2009",
+            "EndDate": "Jun 2014"
+        },
+        {
+            "Campus": "CSU San Bernardino",
+            "DegreeType": "Minor",
+            "Degree": "Mathematics",
+            "StartDate": "Sept 2009",
+            "EndDate": "Jun 2014"
+        }
+    ],
+    "Experience": [
+        {
+            "Position": "Front-End Developer",
+            "Employer": "Readylink Healthcare",
+            "StartDate": "Jun 2014",
+            "EndDate": "Current",
+            "Technologies": [
+                "AngularJS",
+                "ReactJS",
+                "Gulp",
+                "Webpack",
+                "C#",
+                "SQL",
+                "Bootstrap",
+                "jQuery",
+                "Angular Material",
+                "Material UI",
+                "Git",
+                "Sass",
+                "NodeJS"
+            ]
+        },
+        {
+            "Position": "Freelance Software Developer",
+            "Employer": "",
+            "StartDate": "Jun 2016",
+            "EndDate": "Current",
+            "Technologies": [
+                "AngularJS",
+                "ReactJS",
+                "Gulp",
+                "Webpack",
+                "C#",
+                "SQL",
+                "Bootstrap",
+                "jQuery",
+                "Angular Material",
+                "Material UI",
+                "Git",
+                "Sass",
+                "NodeJS",
+                "Nelify",
+                "Now",
+                "NextJS",
+                "Jekyll"
+            ]
+        }
+    ],
+    "Hobbies": [
+        "Playing soccer",
+        "Weight training",
+        "Eating",
+        "Breweries",
+        "Working on side projects",
+        "Listening to podcasts",
+        "Netflix"
+    ]
+}
