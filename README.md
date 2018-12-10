@@ -17,7 +17,7 @@ Open browser at `localhost:3001`
 I use [Netlify](https://www.netlify.com/) to deploy most front-end projects as static assets. Once I configure Netlify to work with my git repository, I can leverage
 CI/CD. I can specify which branch (if any) should automatically be pushed live. For this particular project, `master` is the live branch.
 
-I define my build command and my output folder in `netlify.toml`, although it can be done from Netlify's panel.
+I define my build command and my output folder in `netlify.toml`, although it can be done from Netlify's panel. I also define page redirects here so that the SPA routes properly.
 
 Netlify then runs the build command you tell it to and assigns a url to your project.
 
