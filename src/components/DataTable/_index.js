@@ -6,6 +6,7 @@ import Body from "./Body";
 import Row from "./Row";
 import Cell from "./Cell";
 import CellHeading from "./CellHeading";
+import format from "date-fns/format";
 
 export default class DataTable extends React.Component {
     state = {
@@ -15,6 +16,7 @@ export default class DataTable extends React.Component {
         }),
         filteredData: [],
         searchQuery: "",
+        isFiltered: false,
         activeActionMenu: "",
         multiSelected: false
     };
@@ -34,6 +36,19 @@ export default class DataTable extends React.Component {
             );
         });
         this.setState({filteredData});
+    };
+
+    handleFilter = filterFn => {
+        const originalData = this.state.originalData.map(o => {
+            return {...o};
+        });
+        if (filterFn) {
+            this.setState({isFiltered: true});
+            const filteredData = filterFn(originalData);
+            this.setState({filteredData});
+        } else {
+            this.setState({isFiltered: false});
+        }
     };
 
     handleSort = (prop, type) => () => {
@@ -79,17 +94,20 @@ export default class DataTable extends React.Component {
             filteredData,
             activeActionMenu,
             originalData,
-            multiSelected
+            multiSelected,
+            isFiltered
         } = this.state;
-        const {title, header} = this.props;
+        const {title, header, filterOptions} = this.props;
 
-        const activeData = searchQuery ? filteredData : originalData;
+        const activeData = searchQuery || isFiltered ? filteredData : originalData;
         return (
             <div>
                 <Header
+                    filterOptions={filterOptions}
                     multiSelected={multiSelected}
                     query={searchQuery}
                     onSearchChange={this.handleSearch}
+                    onFilterSelect={this.handleFilter}
                     title={title}
                 />
                 <Table>
@@ -145,7 +163,11 @@ export default class DataTable extends React.Component {
                                         {Object.keys(datum)
                                             .filter(value => value !== "_isSelected")
                                             .map((key, i) => (
-                                                <Cell key={i}>{datum[key]}</Cell>
+                                                <Cell key={i}>
+                                                    {key === "Date"
+                                                        ? format(new Date(datum[key]), "MM/DD/YYYY")
+                                                        : datum[key]}
+                                                </Cell>
                                             ))}
                                         <Cell>
                                             <div
