@@ -20,12 +20,13 @@ const props = {
 };
 
 describe("<Filter/>", () => {
-    it('should call handleToggleSelectedFilter with "Today" and a mocked filterFn', () => {
+    it("should call handleToggleSelectedFilter", () => {
         const wrapper = mount(<Filter {...props} />);
         const instance = wrapper.instance();
         const spy = jest
             .spyOn(instance, "handleToggleSelectedFilter")
             .mockImplementation(() => jest.fn());
+        instance.forceUpdate();
         wrapper
             .find(".dropdown-item")
             .first()

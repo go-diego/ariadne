@@ -18,9 +18,13 @@ export default class Filter extends React.Component {
         }
     };
 
-    handleFilterMenuToggle = () => {
+    handleFilterMenuToggle = state => () => {
         const {isFilterMenuToggled} = this.state;
-        this.setState({isFilterMenuToggled: !isFilterMenuToggled});
+        if (state) {
+            this.setState({isFilterMenuToggled: state});
+        } else {
+            this.setState({isFilterMenuToggled: !isFilterMenuToggled});
+        }
     };
 
     render() {
@@ -32,8 +36,8 @@ export default class Filter extends React.Component {
                 <div className={`dropdown is-right ${isFilterMenuToggled ? "is-active" : ""}`}>
                     <div className="dropdown-trigger">
                         <button
-                            onClick={this.handleFilterMenuToggle}
-                            onBlur={this.handleFilterMenuToggle}
+                            onClick={this.handleFilterMenuToggle()}
+                            onBlur={this.handleFilterMenuToggle(false)}
                             aria-haspopup="true"
                             aria-controls="filters"
                             className={`button ${activeFilter ? "is-warning" : ""}`}>
