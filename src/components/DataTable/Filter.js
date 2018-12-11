@@ -33,7 +33,7 @@ export default class Filter extends React.Component {
                     <div className="dropdown-trigger">
                         <button
                             onClick={this.handleFilterMenuToggle}
-                            // onBlur={this.handleFilterMenuToggle}
+                            onBlur={this.handleFilterMenuToggle}
                             aria-haspopup="true"
                             aria-controls="filters"
                             className={`button ${activeFilter ? "is-warning" : ""}`}>
@@ -49,7 +49,7 @@ export default class Filter extends React.Component {
                                 return (
                                     <a
                                         key={i}
-                                        onClick={this.handleToggleSelectedFilter(
+                                        onMouseDown={this.handleToggleSelectedFilter(
                                             option.label,
                                             option.filterFn
                                         )}

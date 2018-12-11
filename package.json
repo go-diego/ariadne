@@ -5,10 +5,13 @@
     "dependencies": {
         "bulma": "^0.7.2",
         "date-fns": "^1.29.0",
+        "enzyme": "^3.8.0",
+        "enzyme-adapter-react-16": "^1.7.1",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "react-router-dom": "^4.3.1",
-        "react-scripts": "2.1.1"
+        "react-scripts": "2.1.1",
+        "react-test-renderer": "^16.6.3"
     },
     "devDependencies": {
         "eslint-config-airbnb": "^17.1.0",
