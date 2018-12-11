@@ -2,6 +2,9 @@
     "Name": "Diego Bernal",
     "Age": "27",
     "Location": "Coachella Valley, California",
+    "Website": "https://godiego.me",
+    "Github": ["https://github.com/go-diego", "https://github.com/Brightside-Technologies"],
+    "LinkedInUrl": "https://www.linkedin.com/in/dbernal91/",
     "Languages": [
         {
             "language": "English",

@@ -43,8 +43,7 @@ export default class Home extends React.Component {
                 noSort: true
             },
             {
-                label: "Name",
-                type: "string"
+                label: "Name"
             },
             {
                 label: "Description",

@@ -8,6 +8,8 @@ import Cell from "./Cell";
 import CellHeading from "./CellHeading";
 import format from "date-fns/format";
 
+import {sortBy} from "./utils";
+
 export default class DataTable extends React.Component {
     state = {
         originalData: this.props.data,
@@ -20,6 +22,8 @@ export default class DataTable extends React.Component {
         isFiltered: false,
         activeActionMenu: "",
         rowInEditMode: "",
+        sortDirection: "",
+        sortedProp: "",
         multiSelected: false
     };
 
@@ -54,11 +58,47 @@ export default class DataTable extends React.Component {
     };
 
     handleSort = (prop, type) => () => {
-        console.log("PROP", prop);
-        console.log("TYPe", type);
-        // data.sort((a,b) => {
+        this.setState({sortedProp: prop});
 
-        // })
+        const {searchQuery, isFiltered, sortDirection} = this.state;
+
+        let activeData = [];
+
+        if (searchQuery || isFiltered) {
+            activeData = this.state.filteredData.map(o => {
+                return {...o};
+            });
+        } else {
+            activeData = this.state.data.map(o => {
+                return {...o};
+            });
+        }
+
+        let primer = null;
+
+        switch (type) {
+            case "number":
+                primer = parseFloat;
+                break;
+            case "date":
+                primer = i => {
+                    return new Date(i);
+                };
+                break;
+            default:
+                primer = i => {
+                    return i.toLowerCase();
+                };
+        }
+
+        activeData.sort(sortBy(prop, sortDirection === "desc" ? true : false, primer));
+        this.setState({sortDirection: sortDirection === "desc" ? "asc" : "desc"});
+
+        if (searchQuery || isFiltered) {
+            this.setState({filteredData: activeData});
+        } else {
+            this.setState({data: activeData});
+        }
     };
 
     handleRowActionMenu = activeActionMenu => {
@@ -165,7 +205,9 @@ export default class DataTable extends React.Component {
             data,
             multiSelected,
             isFiltered,
-            rowInEditMode
+            rowInEditMode,
+            sortDirection,
+            sortedProp
         } = this.state;
         const {title, header, filterOptions} = this.props;
 
@@ -186,6 +228,24 @@ export default class DataTable extends React.Component {
                     </a>
                 </div>
             );
+        };
+
+        const SortOrderIcon = direction => {
+            if (direction === "desc") {
+                return (
+                    <span style={{padding: "0 8px"}}>
+                        <i className="fas fa-arrow-down" />
+                    </span>
+                );
+            } else if (direction === "asc") {
+                return (
+                    <span style={{padding: "0 8px"}}>
+                        <i className="fas fa-arrow-up" />
+                    </span>
+                );
+            } else {
+                return null;
+            }
         };
 
         return (
@@ -211,7 +271,14 @@ export default class DataTable extends React.Component {
                             {header.map((cell, i) => (
                                 <CellHeading key={i}>
                                     {(cell.noSort && <span>{cell.label}</span>) || (
-                                        <a className="button is-text">{cell.label}</a>
+                                        <a
+                                            onClick={this.handleSort(cell.label, cell.type)}
+                                            className="button is-text">
+                                            {cell.label}
+                                            {(sortedProp === cell.label &&
+                                                SortOrderIcon(sortDirection)) ||
+                                                null}
+                                        </a>
                                     )}
                                 </CellHeading>
                             ))}

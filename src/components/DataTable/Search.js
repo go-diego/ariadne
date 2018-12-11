@@ -4,7 +4,7 @@ export default class Search extends React.Component {
     render() {
         const {onChange, value} = this.props;
         return (
-            <div className="control is-loading">
+            <div className="control">
                 <input
                     onChange={event => onChange(event.target.value)}
                     className="input is-rounded"

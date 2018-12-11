@@ -5,7 +5,7 @@ import AppRoute from "../components/AppRoute";
 import Home from "../containers/Home";
 import HomeLayout from "../containers/HomeLayout";
 
-export default function Routes(){
+export default function Routes() {
     return (
         <Switch>
             <Route exact path="/">
@@ -13,5 +13,5 @@ export default function Routes(){
             </Route>
             <AppRoute path="/home" layout={HomeLayout} component={Home} />
         </Switch>
-    )
+    );
 }
